@@ -12,11 +12,28 @@ module.exports = {
       center: true,
       padding: "2rem",
       screens: {
+        'sm': '640px',
+        'md': '768px',
+        'lg': '1024px',
         "2xl": "1400px",
       },
     },
     extend: {
+      height: {
+        'btn-mobile': '140px',
+        'btn-desktop': '240px',
+      },
+      width: {
+        'btn-mobile': '80px',
+        'btn-desktop': '120px',
+      },
       colors: {
+        'button-blue': "#5C7194",
+        'button-hover': "#FEEFD2",
+        'white-text': "#FCFCFC",
+        'black-text': "#282828",
+        'select-pink': "#F0D7D4",
+        'background': "#F5F5F5",
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
