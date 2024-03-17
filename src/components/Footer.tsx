@@ -8,7 +8,7 @@ const Footer = () => {
                 <Link href='/home'>
                     <FaHome size={26}/>
                 </Link>
-                <Link href='/calendar'>
+                <Link href='/schedule'>
                     <FaCalendarAlt size={24}/>
                 </Link>
                 <Link href='/search'>
