@@ -19,7 +19,7 @@ const Footer = () => {
     const isActive = (href: string) => pathname === href;
 
     return (
-        <div className='m-0 bg-gray-300 w-full h-24 px-6 pt-3 bottom-0 fixed z-10'>
+        <div className='m-0 bg-white w-full h-24 px-6 pt-3 bottom-0 fixed z-10'>
             <div className='flex justify-between items-center'>
                 {navigationItems.map(({ href, icon: Icon }) => (
                     <Link href={href} key={href} >
