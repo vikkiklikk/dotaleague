@@ -12,7 +12,9 @@ export default function Home () {
                 <div className="h-[560px]">
                     <h1 className="text-4xl">This is the homepage</h1>
                     <h3>Here will be few carousels, and scrolled down</h3>
-                    <div>
+                    <div className='flex px-7 gap-[30px]'>
+                        <Card/>
+                        <Card/>
                         <Card/>
                     </div>
                 </div>
