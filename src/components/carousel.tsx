@@ -13,8 +13,10 @@ const Carousel = () => {
                 modules={[Navigation, Pagination]}
                 spaceBetween={-28}
                 slidesPerView={2}
+                slidesOffsetBefore={28}
+                slidesOffsetAfter={28}
                 navigation={true}
-                pagination={{ clickable: true }}
+                //pagination={{ clickable: true }}
                 onSwiper={(swiper) => console.log(swiper)}
                 onSlideChange={() => console.log('slide change')}
             >          
