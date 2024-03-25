@@ -17,8 +17,6 @@ const Carousel = () => {
                 slidesOffsetAfter={28}
                 navigation={true}
                 //pagination={{ clickable: true }}
-                onSwiper={(swiper) => console.log(swiper)}
-                onSlideChange={() => console.log('slide change')}
             >          
                 <SwiperSlide><Card /></SwiperSlide>
                 <SwiperSlide><Card /></SwiperSlide>

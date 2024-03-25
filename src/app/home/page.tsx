@@ -7,13 +7,15 @@ export default function Home () {
     return (
         <HomeLayout>
             <div className="">
-                <div className="h-[188px] bg-blue-300 relative">
-                    <h2>Here is the header, containing avatar image and name, underneith is the filtered choices</h2>
-                    <div className='absolute bottom-0 ml-7 w-[362px]'>
-                        <FilterBar/>
+                <div className='fixed top-0 left-0 w-full z-10 bg-[#F5F5F5]'>
+                    <div className="h-[188px] relative">
+                        <h2>Here is the header, containing avatar image and name, underneith is the filtered choices</h2>
+                        <div className='absolute bottom-0 ml-7'>
+                            <FilterBar/>
+                        </div>
                     </div>
                 </div>
-                <div className="h-[560px]">
+                <div className=" pt-[188px]">
                     <div className='pt-4 pb-4'>
                         <h2 className='py-4 pl-7'>Suggested for you</h2>
                         <Carousel/>
