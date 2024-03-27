@@ -20,12 +20,12 @@ module.exports = {
     },
     extend: {
       height: {
-        'btn-mobile': '140px',
-        'btn-desktop': '240px',
+        'btn-mobile': '40px',
+        'btn-desktop': '80px',
       },
       width: {
-        'btn-mobile': '80px',
-        'btn-desktop': '120px',
+        'btn-mobile': '180px',
+        'btn-desktop': '180px',
       },
       colors: {
         'button-blue': "#5C7194",

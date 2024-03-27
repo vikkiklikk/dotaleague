@@ -9,7 +9,7 @@ export default function Home () {
             <div className="">
                 <div className='fixed top-0 left-0 w-full z-10 bg-[#F5F5F5]'>
                     <div className="h-[188px] relative">
-                        <h2>Here is the header, containing avatar image and name, underneith is the filtered choices</h2>
+                        <h2>Here is the header, containing avatar image and name</h2>
                         <div className='absolute bottom-0 ml-7'>
                             <FilterBar/>
                         </div>
