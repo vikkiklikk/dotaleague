@@ -7,6 +7,8 @@ export default function Search () {
             <div className="bg-red-100">
                 <div className="h-[560px]">
                     <h1 className="text-4xl">This is the Search page</h1>
+                    <iframe width="420" height="345" src="https://www.youtube.com/embed/tgbNymZ7vqY">
+                    </iframe>
                 </div>
             </div>
         </HomeLayout>

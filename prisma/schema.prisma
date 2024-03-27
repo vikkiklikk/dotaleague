@@ -21,3 +21,19 @@ model User {
   createdAt DateTime @default(now())
   updateUt DateTime @updatedAt
 }
+
+model Video {
+  id          Int      @id @default(autoincrement())
+  title       String
+  description String
+  url         String
+  category    Category @relation(fields: [categoryId], references: [id])
+  categoryId  Int
+  createdAt   DateTime @default(now())
+}
+
+model Category {
+  id      Int     @id @default(autoincrement())
+  name    String  @unique
+  videos  Video[]
+}
