@@ -14,6 +14,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
+import { useState } from 'react';
 
 const FormSchema = z
   .object({
@@ -34,8 +35,36 @@ const UploadVideo = () => {
     },
   });
 
-  const onSubmit = (values: z.infer<typeof FormSchema>) => {
+  const [feedbackMessage, setFeedbackMessage] = useState('');
+  const [isError, setIsError] = useState (false);
+
+  const onSubmit = async (values: z.infer<typeof FormSchema>) => {
     console.log(values);
+
+    setIsError(false);
+    setFeedbackMessage('');
+
+    try {
+        const response = await fetch ('/api/admin/uploadVideo', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(values),
+        });
+
+        if (!response.ok) {
+            throw new Error('Failed to upload the video');
+        }
+
+        const data = await response.json();
+        setFeedbackMessage('Video uploaded successfully');
+        console.log('Video uploaded successfully', data);
+    } catch (error) {
+      setIsError(true);
+      setFeedbackMessage('Failed to upload video');
+        console.error('Failed to upload video', error);
+    }
   };
 
   return (
@@ -99,6 +128,11 @@ const UploadVideo = () => {
         <Button className='w-full mt-6' type='submit'>
           Upload video
         </Button>
+        {feedbackMessage && (
+          <div className={isError ? 'text-red-500' : 'text-green-500'}>
+            {feedbackMessage}
+          </div>
+        )}
       </form>
     </Form>
   );
