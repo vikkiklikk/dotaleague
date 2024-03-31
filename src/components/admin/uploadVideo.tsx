@@ -1,5 +1,5 @@
 'use client';
-
+import { Controller } from 'react-hook-form';
 import { useForm } from 'react-hook-form';
 import {
   Form,
@@ -16,13 +16,17 @@ import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { useState } from 'react';
 
-const FormSchema = z
-  .object({
-    url: z.string().min(1, 'URL is required').max(100),
-    title: z.string().min(1, 'Title is required').max(100),
-    description: z.string().min(1, 'Password is required'),
-    categorie: z.string().min(1, 'At least one categorie is required'),
-  });
+const FormSchema = z.object({
+  url: z.string().min(1, 'URL is required').max(100),
+  title: z.string().min(1, 'Title is required').max(100),
+  description: z.string().min(1, 'Description is required'),
+  categoryIds: z.array(z.number()), 
+});
+
+interface Category {
+  id: number;
+  name: string;
+}
 
 const UploadVideo = () => {
   const form = useForm<z.infer<typeof FormSchema>>({
@@ -31,9 +35,11 @@ const UploadVideo = () => {
       url: '',
       title: '',
       description: '',
-      categorie: '',
+      categoryIds: [],
     },
   });
+
+  const [categories, setCategories] = useState([]); // Fetch and set this from your API
 
   const [feedbackMessage, setFeedbackMessage] = useState('');
   const [isError, setIsError] = useState (false);
@@ -45,7 +51,7 @@ const UploadVideo = () => {
     setFeedbackMessage('');
 
     try {
-        const response = await fetch ('/api/admin/uploadVideo', {
+        const response = await fetch ('/api/admin', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -110,20 +116,18 @@ const UploadVideo = () => {
               </FormItem>
             )}
           />
-          <FormField
-            control={form.control}
-            name='categorie'
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Choose categories</FormLabel>
-                <FormControl>
-                  <Input
-                    placeholder='Dropdown for categories' {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+          <Controller
+  name="categoryIds"
+  control={form.control}
+  render={({ field: { onChange, value, ref, ...field } }) => (
+    <select {...field} multiple>
+      <option value="1">Category 1</option>
+      {/* Add options statically for testing */}
+    </select>
+  )}
+/>
+
+          
         </div>
         <Button className='w-full mt-6' type='submit'>
           Upload video

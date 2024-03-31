@@ -27,13 +27,13 @@ model Video {
   title       String
   description String
   url         String
-  category    Category @relation(fields: [categoryId], references: [id])
-  categoryId  Int
+  categories  Category[] @relation("VideoToCategory")
   createdAt   DateTime @default(now())
 }
 
 model Category {
   id      Int     @id @default(autoincrement())
   name    String  @unique
-  videos  Video[]
+  type    String 
+  videos  Video[] @relation("VideoToCategory")
 }
