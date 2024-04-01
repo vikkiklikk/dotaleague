@@ -15,6 +15,7 @@ import { Input } from '../ui/input';
 import { Button } from '../ui/button';
 import Link from 'next/link';
 import GoogleSignInButton from '../GoogleSignInButton';
+import { signIn } from 'next-auth/react'
 
 const FormSchema = z.object({
   email: z.string().min(1, 'Email is required').email('Invalid email'),
@@ -34,18 +35,12 @@ const SignInForm = () => {
   });
 
   const onSubmit = async (values: z.infer<typeof FormSchema>) => {
-    const response = await fetch('/api/user', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        username: values.username,
-        email: values.email,
-        password: values.password
-      })
-    })
-  };
+    const signInData = await signIn('credentials', {
+      email: values.email,
+      password: values.password,
+    });
+    console.log(signInData);
+    };
 
   return (
     <Form {...form}>
