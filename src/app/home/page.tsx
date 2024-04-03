@@ -1,8 +1,22 @@
+'use client'
 import HomeLayout from '../../components/HomeLayout';
 import Carousel from '@/components/carousel';
 import FilterBar from '@/components/filterBar';
+import { useEffect, useState } from 'react';
+import { Video } from '@prisma/client';
 
 export default function Home () {
+    const [allVideos, setAllVideos] = useState<Video[]>([]);
+
+useEffect(() => {
+    const fetchVideos = async () => {
+        const res = await fetch('/api/videos');
+        const data = await res.json();
+        setAllVideos(data);
+        console.log(data);
+    };
+    fetchVideos();
+}, []);
     
     return (
         <HomeLayout>
@@ -18,15 +32,15 @@ export default function Home () {
                 <div className=" pt-[188px]">
                     <div className='pt-4 pb-4'>
                         <h2 className='py-4 pl-7'>Suggested for you</h2>
-                        <Carousel/>
+                        <Carousel videos={allVideos}/>
                     </div>
                     <div className='pt-4 pb-4'>
                         <h2 className='py-4 pl-7'>Popular at the moment</h2>
-                        <Carousel/>
+                        <Carousel videos={allVideos}/>
                     </div>
                     <div className='pt-4 pb-4'>
                         <h2 className='py-4 pl-7'>Games</h2>
-                        <Carousel/>
+                        <Carousel videos={allVideos}/>
                     </div>
                 </div>
             </div>

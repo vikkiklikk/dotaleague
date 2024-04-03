@@ -5,8 +5,13 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import Card from "./card";
+import { Video } from '@prisma/client';
 
-const Carousel = () => {
+interface CarouselProps {
+    videos: Video[];
+}
+
+const Carousel: React.FC<CarouselProps> = ({videos}) => {
     return (
         <>
             <Swiper
@@ -18,16 +23,13 @@ const Carousel = () => {
                 navigation={true}
                 //pagination={{ clickable: true }}
             >          
-                <SwiperSlide><Card /></SwiperSlide>
-                <SwiperSlide><Card /></SwiperSlide>
-                <SwiperSlide><Card /></SwiperSlide>
-                <SwiperSlide><Card /></SwiperSlide>
-                <SwiperSlide><Card /></SwiperSlide>
-                <SwiperSlide><Card /></SwiperSlide>
+                {videos.map((video, index) => (
+                    <SwiperSlide key={index}>
+                        <Card video={video}/>
+                    </SwiperSlide>
+                ))}
             </Swiper>
         </>    
-            
-        
     );
 }
 

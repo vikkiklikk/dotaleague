@@ -1,4 +1,5 @@
 'use client';
+import { useEffect, useState } from 'react';
 import { Controller } from 'react-hook-form';
 import { useForm } from 'react-hook-form';
 import {
@@ -14,18 +15,19 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
-import { useState } from 'react';
 
 const FormSchema = z.object({
   url: z.string().min(1, 'URL is required').max(100),
   title: z.string().min(1, 'Title is required').max(100),
   description: z.string().min(1, 'Description is required'),
-  categoryIds: z.array(z.number()), 
+  ageCategoryIds: z.array(z.number()), 
+  themeCategoryIds: z.array(z.number()),
 });
 
 interface Category {
   id: number;
   name: string;
+  type: 'age' | 'theme';
 }
 
 const UploadVideo = () => {
@@ -35,14 +37,28 @@ const UploadVideo = () => {
       url: '',
       title: '',
       description: '',
-      categoryIds: [],
+      ageCategoryIds: [],
+      themeCategoryIds: [],
     },
   });
 
-  const [categories, setCategories] = useState([]); // Fetch and set this from your API
+  const [ageCategories, setAgeCategories] = useState<Category[]>([]);
+  const [themeCategories, setThemeCategories] = useState<Category[]>([]);
+  const [feedbackMessage, setFeedbackMessage] = useState<string>('');
+  const [isError, setIsError] = useState<boolean>(false);
+  const [ageSelections, setAgeSelections] = useState<{ [key: number]: boolean }>({});
+  const [themeSelections, setThemeSelections] = useState<{ [key: number]: boolean }>({});
 
-  const [feedbackMessage, setFeedbackMessage] = useState('');
-  const [isError, setIsError] = useState (false);
+  useEffect (() => {
+    const fetchCategories = async () => {
+      const res = await fetch('/api/categories');
+      const data = await res.json();
+      setAgeCategories(data.ageCategories);
+      setThemeCategories(data.themeCategories);
+    };
+
+    fetchCategories().catch(console.error);
+  }, []);
 
   const onSubmit = async (values: z.infer<typeof FormSchema>) => {
     console.log(values);
@@ -50,13 +66,25 @@ const UploadVideo = () => {
     setIsError(false);
     setFeedbackMessage('');
 
+  // Destructure ageCategoryIds and themeCategoryIds from values and capture the rest under otherData
+  const { ageCategoryIds, themeCategoryIds, ...otherData } = values;
+
+  // Merge ageCategoryIds and themeCategoryIds
+  const categoryIds = [...ageCategoryIds, ...themeCategoryIds];
+
+  // Construct the final data object to be sent, including the merged categoryIds
+  const submitData = {
+    ...otherData, // This contains url, title, description
+    categoryIds,  // The merged array of category IDs
+  };
+
     try {
         const response = await fetch ('/api/admin', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify(values),
+            body: JSON.stringify(submitData),
         });
 
         if (!response.ok) {
@@ -117,17 +145,59 @@ const UploadVideo = () => {
             )}
           />
           <Controller
-  name="categoryIds"
-  control={form.control}
-  render={({ field: { onChange, value, ref, ...field } }) => (
-    <select {...field} multiple>
-      <option value="1">Category 1</option>
-      {/* Add options statically for testing */}
-    </select>
-  )}
-/>
-
-          
+            name="ageCategoryIds"
+            control={form.control}
+            render={({ field: {onChange, value, ref} }) => (
+              <FormControl>
+                <>
+                  <FormLabel>Age groups</FormLabel>
+                  <select 
+                    ref={ref} 
+                    multiple 
+                    value={value.map(String)}
+                    onChange={(e) => {
+                      const selectedOptions = Array.from(e.target.selectedOptions, option => parseInt(option.value, 10));
+                      onChange(selectedOptions);
+                    }} 
+                    aria-label="Age Categories"
+                    className='form-multiselect'
+                  >
+                    {ageCategories.map((category) => (
+                      <option key={category.id} value={category.id}>
+                        {category.name}
+                      </option>
+                    ))}
+                  </select>
+                </>
+              </FormControl>
+            )}
+          />
+          <Controller
+            name="themeCategoryIds"
+            control={form.control}
+            render={({ field: { onChange, value, ref } }) => (
+              <FormControl>
+                <>
+                  <FormLabel>Theme select</FormLabel>
+                  <select 
+                    ref={ref} 
+                    multiple value={value.map(String)} 
+                    onChange={(e) => {
+                      const val = Array.from(e.target.selectedOptions, option => parseInt(option.value, 10));
+                      onChange(val);
+                    }} 
+                    aria-label="Theme Categories"
+                    className='form-multiselect'>
+                    {themeCategories.map((category) => (
+                      <option key={category.id} value={category.id}>
+                        {category.name}
+                      </option>
+                    ))}
+                  </select>
+                </>
+              </FormControl>
+            )}
+          />
         </div>
         <Button className='w-full mt-6' type='submit'>
           Upload video
