@@ -14,7 +14,6 @@ import * as z from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import Link from 'next/link';
 
 const FormSchema = z.object({
   url: z.string().min(1, 'URL is required').max(100),
@@ -46,8 +45,6 @@ const UploadVideo = () => {
   const [themeCategories, setThemeCategories] = useState<Category[]>([]);
   const [feedbackMessage, setFeedbackMessage] = useState<string>('');
   const [isError, setIsError] = useState<boolean>(false);
-  const [ageSelections, setAgeSelections] = useState<{ [key: number]: boolean }>({});
-  const [themeSelections, setThemeSelections] = useState<{ [key: number]: boolean }>({});
 
   useEffect (() => {
     const fetchCategories = async () => {
@@ -100,6 +97,12 @@ const UploadVideo = () => {
         console.error('Failed to upload video', error);
     }
   };
+
+  // I have to add a function to change the normal youtube url to an embed url
+  // so in stead of https://www.youtube.com/watch?v=OVKRBGzH8aM
+  // it would be https://www.youtube.com/embed/OVKRBGzH8aM
+  // same with the thumbnail image, I need to add the option to upload a special url that changes the youtube url to the thumbnail image
+  //https://img.youtube.com/vi/[youtube video ID]/maxresdefault.jpg
 
   return (
     <Form {...form}>
