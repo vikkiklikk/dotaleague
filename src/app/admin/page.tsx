@@ -1,3 +1,4 @@
+'use client'
 import UploadVideo from "@/components/admin/uploadVideo"
 
 export default function Search () {

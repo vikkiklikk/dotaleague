@@ -57,11 +57,28 @@ const UploadVideo = () => {
     fetchCategories().catch(console.error);
   }, []);
 
+  // Function to transform YouTube URL from watch format to embed format
+  function transformYouTubeUrl(url: string): string {
+    try {
+      const parsedUrl = new URL(url);
+      const youTubeVideoId = parsedUrl.searchParams.get('v');
+
+      if (parsedUrl.hostname === 'www.youtube.com' && youTubeVideoId) {
+        return `https://www.youtube.com/embed/${youTubeVideoId}`;
+      } else if (parsedUrl.hostname === 'youtu.be') {
+        return `https://www.youtube.com/embed${parsedUrl.pathname}`;
+      }
+    } catch (error) {
+      console.error('Error parsing URL:', error);
+    }
+    return url;
+  };
+
   const onSubmit = async (values: z.infer<typeof FormSchema>) => {
     console.log(values);
 
-    setIsError(false);
-    setFeedbackMessage('');
+    // Transform YouTube URL
+    const transformedUrl = transformYouTubeUrl(values.url);
 
   // Destructure ageCategoryIds and themeCategoryIds from values and capture the rest under otherData
   const { ageCategoryIds, themeCategoryIds, ...otherData } = values;
@@ -72,6 +89,7 @@ const UploadVideo = () => {
   // Construct the final data object to be sent, including the merged categoryIds
   const submitData = {
     ...otherData, // This contains url, title, description
+    url: transformedUrl,
     categoryIds,  // The merged array of category IDs
   };
 
