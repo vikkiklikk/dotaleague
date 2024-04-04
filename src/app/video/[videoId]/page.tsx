@@ -1,7 +1,6 @@
-// Assuming this is your VideoPage component within /app/video/[videoId]/page.tsx
 'use client';
 import React, { useEffect, useState } from 'react';
-import { usePathname } from 'next/navigation'; // Next.js 13 navigation hook
+import { usePathname } from 'next/navigation';
 import HomeLayout from '@/components/HomeLayout';
 import { FaChevronLeft } from 'react-icons/fa';
 import { useRouter } from 'next/navigation';
@@ -16,12 +15,11 @@ type Video = {
 export default function VideoPage() {
   const [video, setVideo] = useState<Video | null>(null);
   const pathname = usePathname();
-  const videoId = pathname.split('/').pop(); // Assuming the last segment is the videoId
+  const videoId = pathname.split('/').pop(); 
   const router = useRouter();
 
   useEffect(() => {
     if (videoId) {
-      // Fetching from the API route that utilizes getVideoById server-side
       fetch(`/api/videos/${videoId}`)
         .then((res) => res.json())
         .then((data) => setVideo(data))

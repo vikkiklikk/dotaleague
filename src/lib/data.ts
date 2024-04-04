@@ -3,14 +3,14 @@ import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
 
 export async function getVideoById(videoId: string) {
-  const id = parseInt(videoId, 10); // Convert string ID to number, as your Prisma schema expects an integer ID for videos.
+  const id = parseInt(videoId, 10); 
   try {
     const video = await prisma.video.findUnique({
       where: {
         id: id,
       },
       include: {
-        categories: true, // Assuming you want to include related categories
+        categories: true, 
       },
     });
 

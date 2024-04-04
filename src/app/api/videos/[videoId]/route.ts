@@ -1,8 +1,6 @@
-// File: /app/api/videos/[videoId]/route.ts
 import { NextRequest, NextResponse } from 'next/server';
-import { getVideoById } from '@/lib/data'; // Ensure the path matches your project structure
+import { getVideoById } from '@/lib/data'; 
 
-// Named export for the GET method
 export async function GET(req: NextRequest) {
   // Extract the videoId from the URL
   const videoId = req.nextUrl.pathname.split('/').pop();
