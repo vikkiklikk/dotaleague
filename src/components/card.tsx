@@ -36,10 +36,10 @@ const Card: React.FC<CardProps> = ({video}) => {
                 {/*I'm using two stars that overlay each other, couldn't find a star that I could change fill and border */}
                 <FaRegStar  className="absolute"/>
             </button>
-            <Link href={`/videos/${video.id}`}>
+            <Link href={`/video/${video.id}`}>
                 <div className='w-[152px] h-[98px] rounded-t-2xl bg-slate-500'/>
             </Link>
-            <Link href={`/videos/${video.id}`}>
+            <Link href={`/video/${video.id}`}>
                 <div className='flex py-2 px-2 place-items-center'>
                     <h2 className=' text-sm font-semibold whitespace-nowrap overflow-hidden overflow-ellipsis'>{video.title}</h2>
                 </div>
