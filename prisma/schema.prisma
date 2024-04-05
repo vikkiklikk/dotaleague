@@ -23,12 +23,13 @@ model User {
 }
 
 model Video {
-  id          Int      @id @default(autoincrement())
-  title       String
-  description String
-  url         String
-  categories  Category[] @relation("VideoToCategory")
-  createdAt   DateTime @default(now())
+  id            Int      @id @default(autoincrement())
+  title         String
+  description   String
+  url           String
+  thumbnailUrl  String
+  categories    Category[] @relation("VideoToCategory")
+  createdAt     DateTime @default(now())
 }
 
 model Category {

@@ -58,27 +58,32 @@ const UploadVideo = () => {
   }, []);
 
   // Function to transform YouTube URL from watch format to embed format
-  function transformYouTubeUrl(url: string): string {
+  // and extract video ID
+  function transformYouTubeUrlAndExtractId(url: string): { transformedUrl: string, videoId: string | null } {
+    let videoId: string | null = null;
+
     try {
       const parsedUrl = new URL(url);
-      const youTubeVideoId = parsedUrl.searchParams.get('v');
+      videoId = parsedUrl.searchParams.get('v') ?? parsedUrl.pathname.replace('/', '');
 
-      if (parsedUrl.hostname === 'www.youtube.com' && youTubeVideoId) {
-        return `https://www.youtube.com/embed/${youTubeVideoId}`;
+      if (parsedUrl.hostname === 'www.youtube.com' && videoId) {
+        return { transformedUrl: `https://www.youtube.com/embed/${videoId}`, videoId };
       } else if (parsedUrl.hostname === 'youtu.be') {
-        return `https://www.youtube.com/embed${parsedUrl.pathname}`;
+        return { transformedUrl: `https://www.youtube.com/embed/${videoId}`, videoId };
       }
     } catch (error) {
       console.error('Error parsing URL:', error);
     }
-    return url;
-  };
+
+    return { transformedUrl: url, videoId };
+  }
 
   const onSubmit = async (values: z.infer<typeof FormSchema>) => {
     console.log(values);
 
-    // Transform YouTube URL
-    const transformedUrl = transformYouTubeUrl(values.url);
+    // Transform YouTube URL and extract video ID
+    const {transformedUrl, videoId} = transformYouTubeUrlAndExtractId(values.url);
+    const thumbnailUrl = videoId ? `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg` : '';
 
   // Destructure ageCategoryIds and themeCategoryIds from values and capture the rest under otherData
   const { ageCategoryIds, themeCategoryIds, ...otherData } = values;
@@ -90,6 +95,7 @@ const UploadVideo = () => {
   const submitData = {
     ...otherData, // This contains url, title, description
     url: transformedUrl,
+    thumbnailUrl,
     categoryIds,  // The merged array of category IDs
   };
 
