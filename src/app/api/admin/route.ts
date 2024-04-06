@@ -6,6 +6,7 @@ import * as z from 'zod';
 const videoSchema = z.object({
   title: z.string().min(1, 'Title is required').max(100),
   url: z.string().min(1, 'URL is required'),
+  thumbnailUrl: z.string().min(1, 'URL is required'),
   description: z.string().min(1, 'Description is required'),
   categoryIds: z.array(z.number()), 
 });
@@ -13,12 +14,14 @@ const videoSchema = z.object({
 export async function POST(req: Request) {
   try {
     const body = await req.json();
+    console.log('Recieved data:', body);
     const validatedData = videoSchema.parse(body);
 
     const newVideo = await db.video.create({
       data: {
         title: validatedData.title,
         url: validatedData.url,
+        thumbnailUrl: validatedData.thumbnailUrl,
         description: validatedData.description,
         categories: {
           connect: validatedData.categoryIds.map(id => ({id})),
