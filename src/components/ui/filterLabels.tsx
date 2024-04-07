@@ -1,13 +1,16 @@
 
 interface FilterProps {
     text: string;
-    onClick?: () => void;
+    isSelected: boolean;
+    onClick: () => void;
 };
 
-const FilterLabels: React.FC<FilterProps> = ({text, onClick}) => {
+const FilterLabels: React.FC<FilterProps> = ({text, onClick, isSelected}) => {
+    const selectedClass = "bg-button-hover";
+    const unselectedClass = "bg-white";
 
     return (
-        <button onClick={onClick} className="bg-white h-6 w-auto rounded-md px-3 hover">
+        <button onClick={onClick} className={`h-6 w-auto rounded-md px-3 hover ${isSelected ? selectedClass : unselectedClass}`}>
             {text}
         </button>
     );

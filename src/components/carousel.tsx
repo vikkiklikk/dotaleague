@@ -6,6 +6,8 @@ import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import Card from "./card";
 import { Video } from '@prisma/client';
+import { Suspense } from 'react';
+import { CardSkeleton } from './ui/skeletons';
 
 interface CarouselProps {
     videos: Video[];
@@ -25,7 +27,9 @@ const Carousel: React.FC<CarouselProps> = ({videos}) => {
             >          
                 {videos.map((video, index) => (
                     <SwiperSlide key={index}>
-                        <Card video={video}/>
+                        <Suspense fallback={<CardSkeleton/>}>
+                            <Card video={video}/>
+                        </Suspense>
                     </SwiperSlide>
                 ))}
             </Swiper>

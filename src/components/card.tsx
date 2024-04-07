@@ -3,13 +3,9 @@ import { FaFill, FaStar } from "react-icons/fa";
 import { FaRegStar } from "react-icons/fa";
 import Link from "next/link";
 import useFavorites from "@/hooks/useFavorites";
-//import {ReactComponent as Logo} from "../assets/logo.svg";
+import { Video } from "@prisma/client";
 
-interface Video {
-    id: number;
-    title: string;
-    thumbnailUrl?: string;
-};
+
 interface CardProps {
     video: Video;
 };
