@@ -10,9 +10,9 @@ const page = () => {
     router.back();
   };
   return (
-    <div className='w-full min-h-screen'>
+    <div className='w-full '>
       <FaChevronLeft onClick={handleBackClick} size={24}/>
-      <div className='mt-8'>
+      <div className='mt-6'>
         <img src="/LogoWithText.svg" alt="Intellect isle logo" />
       </div>
       <div className='mt-8'>

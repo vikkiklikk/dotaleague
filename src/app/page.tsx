@@ -11,7 +11,7 @@ export default function Home() {
   return (
   <div>
     <img src="/LogoWithText.svg" alt="Intellect Isle logo" className="pb-8"/>
-    <div className="pl-8 ">
+    <div className="pl-8 space-y-10 ">
       {titles.map((title) => (
         <Link href={title.href} key={title.text} passHref>
           <CustomButton text={title.text}/>

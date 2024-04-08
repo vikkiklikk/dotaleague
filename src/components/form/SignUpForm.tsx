@@ -57,7 +57,7 @@ const SignUpForm = () => {
       })
     })
     if(response.ok) {
-      router.push('/sign-in')
+      router.push('/create-profile')
     } else {
       console.error('Registration failed');
     }
@@ -128,7 +128,7 @@ const SignUpForm = () => {
             )}
           />
         </div>
-        <div className="relative flex justify-center items-center h-[70px] w-[212px] ml-7 mt-20">
+        <div className="relative flex justify-center items-center h-[70px] w-[212px] ml-7 mt-7">
             <img src="/CustomButton.svg" alt="Button" className="absolute inset-0 w-full h-full"/>
           <Button className="w-full relative z-10 bg-transparent text-black-text text-xl font-bold py-2 px-4 border-none" type="submit">
             Sign up
