@@ -28,8 +28,8 @@ module.exports = {
         'btn-desktop': '180px',
       },
       colors: {
-        'button-blue': "#5C7194",
-        'button-hover': "#FEEFD2",
+        'button-blue': "#F47D54",
+        'button-hover': "#84B0B5",
         'white-text': "#FCFCFC",
         'black-text': "#282828",
         'select-pink': "#F0D7D4",
