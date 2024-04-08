@@ -3,7 +3,7 @@ import Navbar from '@/components/Navbar-client';
 
 export default function Layout({children,}: {children: React.ReactNode;}) {
   return (
-    <div className='min-h-screen w-full'>
+    <div className='min-h-screen w-full bg-background'>
       <div className='hidden md:block'>
         <Navbar/>
       </div>

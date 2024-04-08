@@ -34,6 +34,7 @@ module.exports = {
         'black-text': "#282828",
         'select-pink': "#F0D7D4",
         'background': "#F5F5F5",
+        'custom-purple': "#996AA2",
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",

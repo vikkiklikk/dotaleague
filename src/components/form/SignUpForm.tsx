@@ -66,14 +66,14 @@ const SignUpForm = () => {
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className='w-full'>
-        <div className='space-y-2'>
+        <div className='space-y-6'>
           <FormField
             control={form.control}
             name='username'
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Username</FormLabel>
-                <FormControl>
+                <FormLabel className="text-md">Username</FormLabel>
+                <FormControl className="border-custom-purple">
                   <Input placeholder='johndoe' {...field} />
                 </FormControl>
                 <FormMessage />
@@ -85,8 +85,8 @@ const SignUpForm = () => {
             name='email'
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Email</FormLabel>
-                <FormControl>
+                <FormLabel className="text-md">Email</FormLabel>
+                <FormControl className="border-custom-purple">
                   <Input placeholder='mail@example.com' {...field} />
                 </FormControl>
                 <FormMessage />
@@ -98,8 +98,8 @@ const SignUpForm = () => {
             name='password'
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Password</FormLabel>
-                <FormControl>
+                <FormLabel className="text-md">Password</FormLabel>
+                <FormControl className="border-custom-purple">
                   <Input
                     type='password'
                     placeholder='Enter your password'
@@ -115,8 +115,8 @@ const SignUpForm = () => {
             name='confirmPassword'
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Re-Enter your password</FormLabel>
-                <FormControl>
+                <FormLabel className="text-md">Re-Enter your password</FormLabel>
+                <FormControl className="border-custom-purple">
                   <Input
                     placeholder='Re-Enter your password'
                     type='password'
@@ -128,20 +128,14 @@ const SignUpForm = () => {
             )}
           />
         </div>
-        <Button className='w-full mt-6' type='submit'>
-          Sign up
-        </Button>
+        <div className="relative flex justify-center items-center h-[70px] w-[212px] ml-7 mt-20">
+            <img src="/CustomButton.svg" alt="Button" className="absolute inset-0 w-full h-full"/>
+          <Button className="w-full relative z-10 bg-transparent text-black-text text-xl font-bold py-2 px-4 border-none" type="submit">
+            Sign up
+          </Button>
+        </div>
       </form>
-      <div className='mx-auto my-4 flex w-full items-center justify-evenly before:mr-4 before:block before:h-px before:flex-grow before:bg-stone-400 after:ml-4 after:block after:h-px after:flex-grow after:bg-stone-400'>
-        or
-      </div>
-      <GoogleSignInButton>Sign up with Google</GoogleSignInButton>
-      <p className='text-center text-sm text-gray-600 mt-2'>
-        If you don&apos;t have an account, please&nbsp;
-        <Link className='text-blue-500 hover:underline' href='/sign-in'>
-          Sign in
-        </Link>
-      </p>
+      
     </Form>
   );
 };
