@@ -30,7 +30,6 @@ export default function Home () {
             const res = await fetch('/api/videos') ;
             const data = await res.json();
             setAllVideos(data);
-            console.log(data);
         };
         fetchVideos();
     }, []);
