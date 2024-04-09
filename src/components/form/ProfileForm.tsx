@@ -25,11 +25,15 @@ const FormSchema = z.object({
     type: 'age';
   }
 
+  interface FormValues {
+    profileName: string;
+    ageCategoryIds: number[];
+  }
+
   const ProfileForm = () => {
     const [ageCategories, setAgeCategories] = useState<Category[]>([]);
-    const [feedbackMessage, setFeedbackMessage] = useState<string>('');
     const router = useRouter();
-    const form = useForm<z.infer<typeof FormSchema>>({
+    const form = useForm<FormValues>({
       resolver: zodResolver(FormSchema),
       defaultValues: {
         profileName: "",
@@ -37,6 +41,7 @@ const FormSchema = z.object({
       },
     });
 
+    // Fetch categories
     useEffect (() => {
         const fetchCategories = async () => {
           const res = await fetch('/api/categories');
@@ -47,7 +52,7 @@ const FormSchema = z.object({
         fetchCategories().catch(console.error);
       }, []);
 
-    const onSubmit = async (values: z.infer<typeof FormSchema>) => {
+    const onSubmit = async (values: FormValues) => {
         console.log(values);
 
         const submitData = { 
@@ -55,6 +60,7 @@ const FormSchema = z.object({
             ageCategotyIds: values.ageCategoryIds,
         }
         try {
+            // we need to change the api to user
             const response = await fetch ('/api/admin', {
                 method: 'POST',
                 headers: {
@@ -108,7 +114,7 @@ const FormSchema = z.object({
                                 onChange(selectedOptions);
                                 }} 
                                 aria-label="Age Categories"
-                                className='form-multiselect'
+                                className='form-multiselect border border-custom-purple rounded-md'
                             >
                                 {ageCategories.map((category) => (
                                 <option key={category.id} value={category.id}>
@@ -122,7 +128,7 @@ const FormSchema = z.object({
                     />
                     <div className="relative flex justify-center items-center h-[70px] w-[212px] ml-7 mt-[250px]">
                         <img src="/CustomButton.svg" alt="Button" className="absolute inset-0 w-full h-full "/>
-                        <Button className="w-full relative z-10 bg-transparent text-black-text text-xl font-bold py-2 px-4 border-none" type="submit">
+                        <Button className="w-full relative z-10 bg-transparent text-black-text text-xl font-bold py-2 px-4 border-none hover:bg-transparent" type="submit">
                             Next
                         </Button>
                     </div>
