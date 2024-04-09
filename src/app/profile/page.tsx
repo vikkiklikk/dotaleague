@@ -10,8 +10,6 @@ const page = async () => {
   const session = await getServerSession(authOptions);
   console.log(session);
 
-  const singOutHandler = () => {};
-
   // returns the profile but only if signed in
   return (
     <>
