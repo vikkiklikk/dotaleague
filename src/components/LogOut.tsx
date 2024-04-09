@@ -8,10 +8,13 @@ const LogOut = () => {
   return (
     <Button
       onClick={() => {
-        signOut();
+        signOut({
+          redirect: true,
+          callbackUrl: `${window.location.origin}/`,
+        });
       }}
     >
-      <Link href="/">Log Out</Link>
+      Log Out
     </Button>
   );
 };
