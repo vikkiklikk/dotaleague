@@ -33,7 +33,12 @@ const page = async () => {
           </div>
         </HomeLayout>
       ) : (
-        <h1 className="text-4xl">Please Sign In To See Profile</h1>
+        <>
+        <div className='mt-6'>
+        <img src="/LogoWithText.svg" alt="Intellect isle logo" />
+      </div>
+        <h1 className="text-2xl">Please Sign In To See Profile!</h1>
+        </>
       )}
     </>
   );
