@@ -14,6 +14,7 @@ import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import { useToast } from "@/components/ui/use-toast";
 
 const FormSchema = z.object({
   email: z.string().min(1, "Email is required").email("Invalid email"),
@@ -25,6 +26,7 @@ const FormSchema = z.object({
 
 const SignInForm = () => {
   const router = useRouter();
+  const { toast } = useToast();
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
@@ -40,7 +42,11 @@ const SignInForm = () => {
       redirect: false,
     });
     if (signInData?.error) {
-      console.log(signInData.error);
+      toast({
+        title: "Error",
+        description: "Oops! Something went wrong!",
+        variant: "destructive",
+      });
     } else {
       router.push("/home");
     }
@@ -55,7 +61,9 @@ const SignInForm = () => {
             name="email"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="text-md">Enter your email address</FormLabel>
+                <FormLabel className="text-md">
+                  Enter your email address
+                </FormLabel>
                 <FormControl className="border-custom-purple">
                   <Input placeholder="mail@example.com" {...field} />
                 </FormControl>
@@ -82,8 +90,15 @@ const SignInForm = () => {
           />
         </div>
         <div className="relative flex justify-center items-center h-[70px] w-[212px] ml-7 mt-[180px]">
-            <img src="/CustomButton.svg" alt="Button" className="absolute inset-0 w-full h-full"/>
-          <Button className="w-full relative z-10 bg-transparent text-black-text text-xl font-bold py-2 px-4 border-none" type="submit">
+          <img
+            src="/CustomButton.svg"
+            alt="Button"
+            className="absolute inset-0 w-full h-full"
+          />
+          <Button
+            className="w-full relative z-10 bg-transparent text-black-text text-xl font-bold py-2 px-4 border-none"
+            type="submit"
+          >
             Log in
           </Button>
         </div>
