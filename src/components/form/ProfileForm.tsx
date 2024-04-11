@@ -133,7 +133,7 @@ const FormSchema = z.object({
                     />
                     <div className="relative flex justify-center items-center h-[70px] w-[212px] ml-7 mt-[250px]">
                         <img src="/CustomButton.svg" alt="Button" className="absolute inset-0 w-full h-full "/>
-                        <Button className="w-full relative z-10 bg-transparent text-black-text text-xl font-bold py-2 px-4 border-none hover:bg-transparent" onClick={navigateHome}> //here should be type=submit
+                        <Button className="w-full relative z-10 bg-transparent text-black-text text-xl font-bold py-2 px-4 border-none hover:bg-transparent" onClick={navigateHome}>
                             Next
                         </Button>
                     </div>
